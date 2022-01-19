@@ -9,10 +9,9 @@ services:
   
   redis:
     image: redis:6.2.6-alpine
-    command: redis-server /usr/local/etc/redis/redis.conf
+    command: redis-server --requirepass verysecretpassword
     volumes:
       - ccp-redis-data:/data
-      - ./redis.conf:/usr/local/etc/redis/redis.conf
 
 volumes:
   ccp-redis-data:
