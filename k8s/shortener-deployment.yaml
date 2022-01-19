@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: shortener
+  name: shortener
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: shortener
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: shortener
+    spec:
+      containers:
+      - image: radinshayanfar/ccp:1.0
+        name: shortener
+        resources: {}
+        ports:
+          - containerPort: 8080
+        env:
+          - name: shortener_redis_password
+            valueFrom:
+              secretKeyRef:
+                key: REDIS_SECRET
+                name: redis-secret
+        volumeMounts:
+          - mountPath: /env/.env
+            subPath: .env
+            name: config-map
+            readOnly: true
+        livenessProbe:
+          httpGet:
+            port: 8080
+            path: /healthz
+      volumes:
+        - name: config-map
+          configMap:
+            name: shortener-config
+status: {}
