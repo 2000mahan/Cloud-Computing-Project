@@ -24,10 +24,10 @@ spec:
         ports:
           - containerPort: 8080
         env:
-          - name: shortener_redis_password
+          - name: REDIS_SECRET
             valueFrom:
               secretKeyRef:
-                key: REDIS_SECRET
+                key: REDIS_PASSWORD
                 name: redis-secret
         volumeMounts:
           - mountPath: /env/.env
