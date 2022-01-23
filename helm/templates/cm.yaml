@@ -1,0 +1,14 @@
+apiVersion: v1
+data:
+  .env: |
+    HOST=0.0.0.0
+    PORT=8080
+    URL_EX=60
+
+    REDIS_HOST=redis-service
+    REDIS_PORT=6379
+    REDIS_DB=0
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: shortener-config
