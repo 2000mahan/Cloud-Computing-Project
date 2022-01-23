@@ -20,7 +20,9 @@ spec:
       containers:
       - image: radinshayanfar/ccp:1.0
         name: shortener
-        resources: {}
+        resources: 
+          requests:
+            cpu: "40m"
         ports:
           - containerPort: 8080
         env:
