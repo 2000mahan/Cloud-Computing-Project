@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: shortener-service
+  name: {{ .Release.Name }}-shortener-service
 spec:
   selector:
-    app: shortener
+    app: {{ .Release.Name }}-shortener
   ports:
     - protocol: TCP
-      port: 80
+      port: {{ .Values.service.port }}
       targetPort: 8080

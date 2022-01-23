@@ -3,23 +3,23 @@ kind: Deployment
 metadata:
   creationTimestamp: null
   labels:
-    app: shortener
-  name: shortener
+    app: {{ .Release.Name }}-shortener
+  name: {{ .Release.Name }}-shortener
 spec:
-  replicas: 2
+  replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: shortener
+      app: {{ .Release.Name }}-shortener
   strategy: {}
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: shortener
+        app: {{ .Release.Name }}-shortener
     spec:
       containers:
-      - image: radinshayanfar/ccp:1.0
-        name: shortener
+      - image: radinshayanfar/ccp:1.1
+        name: {{ .Release.Name }}-shortener
         resources: 
           requests:
             cpu: "40m"
@@ -30,18 +30,14 @@ spec:
             valueFrom:
               secretKeyRef:
                 key: REDIS_PASSWORD
-                name: redis-secret
+                name: {{ .Release.Name }}-redis-secret
         volumeMounts:
           - mountPath: /env/.env
             subPath: .env
             name: config-map
             readOnly: true
-        livenessProbe:
-          httpGet:
-            port: 8080
-            path: /healthz
       volumes:
         - name: config-map
           configMap:
-            name: shortener-config
+            name: {{ .Release.Name }}-shortener-config
 status: {}

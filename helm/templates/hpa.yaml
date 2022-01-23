@@ -1,12 +1,12 @@
 apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: shortener
+  name: {{ .Release.Name }}-shortener
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: shortener
+    name: {{ .Release.Name }}-shortener
   minReplicas: 1
   maxReplicas: 5
   metrics:
