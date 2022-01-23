@@ -18,7 +18,7 @@ spec:
         app: shortener
     spec:
       containers:
-      - image: radinshayanfar/ccp:1.0
+      - image: radinshayanfar/ccp:1.1
         name: shortener
         resources: 
           requests:
@@ -36,10 +36,6 @@ spec:
             subPath: .env
             name: config-map
             readOnly: true
-        livenessProbe:
-          httpGet:
-            port: 8080
-            path: /healthz
       volumes:
         - name: config-map
           configMap:
