@@ -20,6 +20,12 @@ spec:
       initContainers:
         - name: init-redis
           image: redis:6.2.6-bullseye
+          env:
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: REDIS_PASSWORD
+                  name: redis-secret
           command:
             - bash
             - '-c'
@@ -34,6 +40,8 @@ spec:
               else
                 cp /mnt/config-map/slave.conf /etc/redis.conf
               fi
+              echo "requirepass $(REDIS_PASSWORD)" >> /etc/redis.conf
+              echo "masterauth $(REDIS_PASSWORD)" >> /etc/redis.conf
           volumeMounts:
             - name: conf
               mountPath: /etc/
@@ -43,14 +51,8 @@ spec:
       containers:
         - image: redis:6.2.6-alpine
           name: redis
-          env:
-            - name: REDIS_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  key: REDIS_PASSWORD
-                  name: redis-secret
           command: [ "redis-server" ]
-          args: [ "/etc/redis.conf", "--requirepass", $(REDIS_PASSWORD) ]
+          args: [ "/etc/redis.conf" ]
           ports:
             - name: redis-port
               containerPort: 6379
