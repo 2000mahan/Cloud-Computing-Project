@@ -5,7 +5,7 @@ data:
     PORT=8080
     URL_EX=60
 
-    REDIS_HOST=redis-service
+    REDIS_HOST=redis-0.redis
     REDIS_PORT=6379
     REDIS_DB=0
   master.conf: |
