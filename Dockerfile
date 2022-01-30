@@ -14,5 +14,7 @@ ENV PATH="/opt/venv/bin:$PATH"
 
 ENV ENV_FILE=/env/.env
 
+EXPOSE 8080
+
 COPY /app .
 CMD ["python", "app.py"]
